@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using MyCodeCamp.Data.Entities;
+using MyCodeCamp.DbUtilities.Entities;
 
-namespace MyCodeCamp.Data
+namespace MyCodeCamp.DbUtilities
 {
     public class CampContext : IdentityDbContext
     {

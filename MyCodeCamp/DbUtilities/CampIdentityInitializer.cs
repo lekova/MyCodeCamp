@@ -5,9 +5,9 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using MyCodeCamp.Data.Entities;
+using MyCodeCamp.DbUtilities.Entities;
 
-namespace MyCodeCamp.Data
+namespace MyCodeCamp.DbUtilities
 {
     public class CampIdentityInitializer
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MyCodeCamp.Data.Entities
+namespace MyCodeCamp.DbUtilities.Entities
 {
   public class Speaker
   {

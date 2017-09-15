@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace MyCodeCamp.Data.Migrations
+namespace MyCodeCamp.Migrations
 {
     public partial class InitialDb : Migration
     {

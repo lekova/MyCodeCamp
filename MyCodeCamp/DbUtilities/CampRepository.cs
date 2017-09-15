@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using MyCodeCamp.Data.Entities;
+using MyCodeCamp.DbUtilities.Entities;
 
-namespace MyCodeCamp.Data
+namespace MyCodeCamp.DbUtilities
 {
     public class CampRepository : ICampRepository
     {

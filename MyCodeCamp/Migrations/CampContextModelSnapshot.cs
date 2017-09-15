@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using MyCodeCamp.Data;
+using MyCodeCamp.DbUtilities;
 
-namespace MyCodeCamp.Data.Migrations
+namespace MyCodeCamp.DbUtilities.Migrations
 {
     [DbContext(typeof(CampContext))]
     partial class CampContextModelSnapshot : ModelSnapshot

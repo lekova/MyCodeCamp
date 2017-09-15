@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using MyCodeCamp.Data.Entities;
+using MyCodeCamp.DbUtilities.Entities;
 
-namespace MyCodeCamp.Data
+namespace MyCodeCamp.DbUtilities
 {
     public interface ICampRepository
     {

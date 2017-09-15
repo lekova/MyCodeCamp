@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace MyCodeCamp.Data.Migrations
+namespace MyCodeCamp.DbUtilities.Migrations
 {
     public partial class Moniker : Migration
     {

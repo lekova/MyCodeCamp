@@ -1,4 +1,4 @@
-﻿namespace MyCodeCamp.Data.Entities
+﻿namespace MyCodeCamp.DbUtilities.Entities
 {
   public class Location
   {

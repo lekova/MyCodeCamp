@@ -8,8 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using MyCodeCamp.Data;
-using MyCodeCamp.Data.Entities;
+using MyCodeCamp.DbUtilities;
+using MyCodeCamp.DbUtilities.Entities;
 using Microsoft.AspNetCore.Identity;
 
 namespace MyCodeCamp

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 
-namespace MyCodeCamp.Data.Entities
+namespace MyCodeCamp.DbUtilities.Entities
 {
     public class CampUser : IdentityUser
     {
