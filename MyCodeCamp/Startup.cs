@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MyCodeCamp.DbUtilities;
-using MyCodeCamp.DbUtilities.Entities;
+using MyCodeCamp.Entities;
 using Microsoft.AspNetCore.Identity;
 
 namespace MyCodeCamp
@@ -30,11 +30,19 @@ namespace MyCodeCamp
         {
             services.AddDbContext<CampContext>(ServiceLifetime.Scoped)
                 .AddIdentity<CampUser, IdentityRole>();
-            services.AddMvc();
+            
+            services.AddScoped<ICampRepository, CampRepository>();
+            services.AddTransient<CampDbInitializer>();
+            services.AddMvc()
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = 
+                        Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, CampDbInitializer dbSeeder)
         {
             if (env.IsDevelopment())
             {
@@ -42,6 +50,7 @@ namespace MyCodeCamp
             }
 
             app.UseMvc();
+            dbSeeder.Seed().Wait();
         }
     }
 }
