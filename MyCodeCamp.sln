@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.15
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCodeCamp", "MyCodeCamp\MyCodeCamp.csproj", "{B40F3A82-726D-45D2-98BD-675CBD70E9B0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B40F3A82-726D-45D2-98BD-675CBD70E9B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B40F3A82-726D-45D2-98BD-675CBD70E9B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B40F3A82-726D-45D2-98BD-675CBD70E9B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B40F3A82-726D-45D2-98BD-675CBD70E9B0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C9AED3EF-2818-4AC5-9B5C-4176906EB30C}
+	EndGlobalSection
+EndGlobal
