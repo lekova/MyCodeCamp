@@ -8,18 +8,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using MyCodeCamp.Data;
 using MyCodeCamp.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 
-namespace MyCodeCamp
+namespace MyCodeCamp.Data
 {
     public class Startup
     {
         public Startup(IConfiguration configuration)
         {
-            // who is passing the parameter here
-            // since that gets loaded from the main method
             Configuration = configuration;
         }
 
@@ -30,18 +27,11 @@ namespace MyCodeCamp
         {
             services.AddDbContext<CampContext>(ServiceLifetime.Scoped)
                 .AddIdentity<CampUser, IdentityRole>();
-            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseMvc();
         }
     }
 }
