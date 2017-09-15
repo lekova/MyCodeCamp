@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MyCodeCamp.DbUtilities.Entities;
+using MyCodeCamp.Entities;
 
 namespace MyCodeCamp.DbUtilities
 {
