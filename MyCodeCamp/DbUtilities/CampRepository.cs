@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using MyCodeCamp.DbUtilities.Entities;
+using MyCodeCamp.Entities;
 
 namespace MyCodeCamp.DbUtilities
 {

@@ -1,4 +1,4 @@
-﻿using MyCodeCamp.DbUtilities.Entities;
+﻿using MyCodeCamp.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

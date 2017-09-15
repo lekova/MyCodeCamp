@@ -1,17 +1,1 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-
-namespace MyCodeCamp.DbUtilities.Entities
-{
-    public class CampUser : IdentityUser
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-
-    }
-}
+﻿using System;using System.Collections.Generic;using System.Linq;using System.Text;using System.Threading.Tasks;using Microsoft.AspNetCore.Identity.EntityFrameworkCore;using Microsoft.AspNetCore.Identity;namespace MyCodeCamp.Entities{    public class CampUser : IdentityUser    {        public string FirstName { get; set; }        public string LastName { get; set; }    }}

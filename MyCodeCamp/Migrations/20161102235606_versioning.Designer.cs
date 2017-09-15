@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using MyCodeCamp.DbUtilities;
 
-namespace MyCodeCamp.DbUtilities.Migrations
+namespace MyCodeCamp.Migrations
 {
     [DbContext(typeof(CampContext))]
     [Migration("20161102235606_versioning")]

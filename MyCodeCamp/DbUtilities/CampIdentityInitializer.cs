@@ -5,7 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using MyCodeCamp.DbUtilities.Entities;
+using MyCodeCamp.Entities;
 
 namespace MyCodeCamp.DbUtilities
 {
