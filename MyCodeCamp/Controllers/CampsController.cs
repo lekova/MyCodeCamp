@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using MyCodeCamp.DbUtilities;
 using MyCodeCamp.Entities;
 using System;
+using System.Threading.Tasks;
 
 namespace MyCodeCamp.Controllers
 {
@@ -9,10 +11,12 @@ namespace MyCodeCamp.Controllers
     public class CampsController : Controller
     {
         private ICampRepository campRepository;
+        private ILogger<CampsController> logger;
 
-        public CampsController(ICampRepository campRepository)
+        public CampsController(ICampRepository campRepository, ILogger<CampsController> logger)
         {
             this.campRepository = campRepository;
+            this.logger = logger;
         }
         public IActionResult Get()
         {
@@ -21,7 +25,7 @@ namespace MyCodeCamp.Controllers
             return Ok(camps);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name ="GetCamp")]
         public IActionResult Get(int id, bool includeSpeakers = false)
         {
             try
@@ -38,6 +42,85 @@ namespace MyCodeCamp.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] Camp campModel)
+        {
+            logger.LogInformation("Creating a new code camp.");
+            try
+            {
+                campRepository.Add(campModel);
+                if(await campRepository.SaveAllAsync())
+                {
+                    var newUri = Url.Link("GetCamp", new { id = campModel.Id });
+                    return Created(newUri, campModel);
+                }
+                else
+                {
+                    logger.LogWarning("Could not save code camp to the database.");
+                }
+            }
+            catch(Exception ex)
+            {
+                logger.LogError($"Threw exception while saving Camp: {ex}");
+            }
+            return BadRequest();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody]Camp campModel)
+        {
+            try
+            {
+                var oldCamp = campRepository.GetCamp(id);
+                if(oldCamp == null)
+                {
+                    return NotFound($"Could not find a camp with and ID of {id}");
+                }
+
+                // map model to oldCamp
+                oldCamp.Name = campModel.Name ?? oldCamp.Name;
+                oldCamp.Description = campModel.Description ?? oldCamp.Description;
+                oldCamp.Location = campModel.Location ?? oldCamp.Location;
+                oldCamp.Length = campModel.Length > 0 ? campModel.Length : oldCamp.Length;
+                oldCamp.EventDate = 
+                    campModel.EventDate != DateTime.MinValue ? campModel.EventDate : oldCamp.EventDate;
+
+                if (await campRepository.SaveAllAsync())
+                {
+                    return Ok(oldCamp);
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+
+            return BadRequest("Couldn't update Camp");
+        }
+
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                var oldCapm = campRepository.GetCamp(id);
+                if (oldCapm == null) return NotFound($"Could not find camp with ID of {id}");
+
+                campRepository.Delete(oldCapm);
+                if (await campRepository.SaveAllAsync())
+                {
+                    return Ok();
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+
+            return BadRequest("Could not delete camp.");
         }
     }
 }
