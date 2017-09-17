@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using MyCodeCamp.DbUtilities;
 using MyCodeCamp.Entities;
 using Microsoft.AspNetCore.Identity;
+using AutoMapper;
 
 namespace MyCodeCamp
 {
@@ -33,6 +34,8 @@ namespace MyCodeCamp
             
             services.AddScoped<ICampRepository, CampRepository>();
             services.AddTransient<CampDbInitializer>();
+            services.AddAutoMapper();
+
             services.AddMvc()
                 .AddJsonOptions(options =>
                 {
