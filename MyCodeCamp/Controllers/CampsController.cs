@@ -51,16 +51,19 @@ namespace MyCodeCamp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Camp campModel)
+        public async Task<IActionResult> Post([FromBody] CampModel campModel)
         {
-            logger.LogInformation("Creating a new code camp.");
             try
             {
-                campRepository.Add(campModel);
+                logger.LogInformation("Creating a new code camp.");
+
+                var camp = mapper.Map<Camp>(campModel);
+
+                campRepository.Add(camp);
                 if(await campRepository.SaveAllAsync())
                 {
-                    var newUri = Url.Link("GetCamp", new { id = campModel.Id });
-                    return Created(newUri, campModel);
+                    var newUri = Url.Link("GetCamp", new { moniker = camp.Moniker });
+                    return Created(newUri, mapper.Map<CampModel>(camp));
                 }
                 else
                 {
@@ -105,8 +108,7 @@ namespace MyCodeCamp.Controllers
 
             return BadRequest("Couldn't update Camp");
         }
-
-
+        
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
