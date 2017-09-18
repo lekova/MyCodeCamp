@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyCodeCamp.Models
 {
     public class CampModel
     {
-        public int Url { get; set; }
+        public string Url { get; set; }
         public string Moniker { get; set; }
         public string Name { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public int Length { get; set; }
         public string Description { get; set; }
 
         public string LocationAddress1 { get; set; }
@@ -22,4 +18,5 @@ namespace MyCodeCamp.Models
         public string LocationStateProvince { get; set; }
         public string LocationPostalCode { get; set; }
         public string LocationCountry { get; set; }
-    }}
+    }
+}

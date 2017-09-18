@@ -12,6 +12,7 @@ using MyCodeCamp.DbUtilities;
 using MyCodeCamp.Entities;
 using Microsoft.AspNetCore.Identity;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 
 namespace MyCodeCamp
 {
@@ -34,6 +35,7 @@ namespace MyCodeCamp
             
             services.AddScoped<ICampRepository, CampRepository>();
             services.AddTransient<CampDbInitializer>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddAutoMapper();
 
             services.AddMvc()

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace MyCodeCamp.Controllers
 {
     [Route("api/camps")]
-    public class CampsController : Controller
+    public class CampsController : BaseController
     {
         private ICampRepository campRepository;
         private ILogger<CampsController> logger;
@@ -31,17 +31,17 @@ namespace MyCodeCamp.Controllers
             return Ok(mapper.Map<IEnumerable<CampModel>>(camps));
         }
 
-        [HttpGet("{id}", Name ="GetCamp")]
-        public IActionResult Get(int id, bool includeSpeakers = false)
+        [HttpGet("{moniker}", Name ="GetCamp")]
+        public IActionResult Get(string moniker, bool includeSpeakers = false)
         {
             try
             {
                 Camp camp = null;
                 if (includeSpeakers)
-                    camp = campRepository.GetCampWithSpeakers(id);
-                else camp = campRepository.GetCamp(id);
+                    camp = campRepository.GetCampByMonikerWithSpeakers(moniker);
+                else camp = campRepository.GetCampByMoniker(moniker);
 
-                if (camp == null) return NotFound($"Camp {id} was not found.");
+                if (camp == null) return NotFound($"Camp {moniker} was not found.");
                 return Ok(mapper.Map<CampModel>(camp));
             }
             catch (Exception ex)
