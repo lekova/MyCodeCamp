@@ -2,37 +2,36 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyCodeCamp.Controllers
 {
-    [Route("api/operations")]
+    [Route("api/[controller]")]
     public class OperationsController : Controller
     {
-        private ILogger<OperationsController> logger;
         private IConfigurationRoot config;
+        private ILogger<OperationsController> logger;
 
-        public OperationsController(ILogger<OperationsController> logger, IConfigurationRoot configurationRoot)
+        public OperationsController(ILogger<OperationsController> logger, IConfigurationRoot config)
         {
             this.logger = logger;
-            this.config = configurationRoot;
+            this.config = config;
         }
 
-        [HttpGet("reloadConfig")]
-        public IActionResult ReploadConfiguration()
+        [HttpOptions("reloadConfig")]
+        public IActionResult ReloadConfiguration()
         {
             try
             {
                 config.Reload();
-                return Ok("Configuration reloaded");
+
+                return Ok("Configuration Reloaded");
             }
             catch (Exception ex)
             {
-                logger.LogError($"Excdeption was thrown while reloading configuration: {ex}");
+                logger.LogError($"Exception thrown while reloading configuration: {ex}");
             }
-            return BadRequest("Could not reload configuration.");
+
+            return BadRequest("Could not reload configuration");
         }
     }
 }

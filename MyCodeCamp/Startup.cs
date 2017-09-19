@@ -13,23 +13,31 @@ using MyCodeCamp.Entities;
 using Microsoft.AspNetCore.Identity;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace MyCodeCamp
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private IConfigurationRoot config;
+        private IHostingEnvironment env;
+
+        public Startup(IHostingEnvironment env)//IConfiguration configuration)
         {
-            // who is passing the parameter here
-            // since that gets loaded from the main method
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+               .SetBasePath(env.ContentRootPath)
+               .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+               .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+               .AddEnvironmentVariables();
+            this.env = env;
+            config = builder.Build();
         }
 
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(config);
             services.AddDbContext<CampContext>(ServiceLifetime.Scoped)
                 .AddIdentity<CampUser, IdentityRole>();
             
@@ -50,7 +58,7 @@ namespace MyCodeCamp
         public void Configure(IApplicationBuilder app,      IHostingEnvironment env, 
                               CampDbInitializer dbSeeder,   ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddConsole(config.GetSection("Logging"));
             loggerFactory.AddDebug();
 
             if (env.IsDevelopment())
