@@ -29,11 +29,14 @@ namespace MyCodeCamp.Controllers
         }
 
         [HttpGet()]
-        public IActionResult Get(string moniker)
+        public IActionResult Get(string moniker, bool includeTalks = false)
         {
             try
             {
-                var speakers = campRepository.GetSpeakersByMoniker(moniker);
+                var speakers = includeTalks
+                    ? campRepository.GetSpeakersByMonikerWithTalks(moniker)
+                    : campRepository.GetSpeakersByMoniker(moniker);
+
                 return Ok(mapper.Map<IEnumerable<SpeakerModel>>(speakers));
             }
             catch (Exception ex)
@@ -44,11 +47,12 @@ namespace MyCodeCamp.Controllers
         }
 
         [HttpGet("{id}", Name = "GetSpeaker")]
-        public IActionResult Get(string moniker, int id)
+        public IActionResult Get(string moniker, int id, bool includeTalks = false)
         {
             try
             {
-                var speaker = campRepository.GetSpeaker(id);
+                Speaker speaker = includeTalks ? campRepository.GetSpeakerWithTalks(id) : campRepository.GetSpeaker(id);
+
                 if (speaker == null) return NotFound();
                 if (speaker.Camp.Moniker != moniker)
                     return BadRequest("Speker could not be found in the specified camp.");
