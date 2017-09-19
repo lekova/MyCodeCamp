@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MyCodeCamp.DbUtilities;
 using MyCodeCamp.Entities;
+using MyCodeCamp.Filters;
 using MyCodeCamp.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 namespace MyCodeCamp.Controllers
 {
     [Route("api/camps")]
+    [ValidateModel]
     public class CampsController : BaseController
     {
         private ICampRepository campRepository;
@@ -55,7 +57,6 @@ namespace MyCodeCamp.Controllers
         {
             try
             {
-                if(!ModelState.IsValid) return BadRequest(ModelState); 
                 logger.LogInformation("Creating a new code camp.");
 
                 var camp = mapper.Map<Camp>(campModel);
@@ -83,8 +84,6 @@ namespace MyCodeCamp.Controllers
         {
             try
             {
-                if (!ModelState.IsValid) return BadRequest(ModelState);
-
                 var oldCamp = campRepository.GetCampByMoniker(moniker);
                 if(oldCamp == null)
                 {
