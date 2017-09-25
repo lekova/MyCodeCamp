@@ -47,6 +47,22 @@ namespace MyCodeCamp
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddAutoMapper();
 
+            services.AddCors(config => 
+            {
+                config.AddPolicy("LinasPolicy", bldr =>
+                {
+                    bldr.AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .WithOrigins("http://linalekova.com")
+                });
+                config.AddPolicy("AnyGet", bldr =>
+                {
+                    bldr.AllowAnyHeader()
+                        .WithMethods("GET")
+                        .AllowAnyOrigin();
+                });
+            });
+
             services.AddMvc(opt =>
             {
                 if(!env.IsProduction())
@@ -68,6 +84,14 @@ namespace MyCodeCamp
         {
             loggerFactory.AddConsole(config.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            // this is a global config, if we want to config separately we need to use polices
+            app.UseCors(config =>
+            {
+                //config.AllowAnyHeader()
+                //.AllowAnyMethod()
+                //.WithOrigins("http://linalekova.com");
+            });
 
             if (env.IsDevelopment())
             {
