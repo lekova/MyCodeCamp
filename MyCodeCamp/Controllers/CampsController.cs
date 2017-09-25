@@ -48,6 +48,7 @@ namespace MyCodeCamp.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError($"Threw exception while saving Camp: {ex}");
                 return BadRequest();
             }
         }
@@ -100,7 +101,7 @@ namespace MyCodeCamp.Controllers
             }
             catch(Exception ex)
             {
-
+                logger.LogError($"Threw exception while updating Camp: {ex}");
             }
 
             return BadRequest("Couldn't update Camp");
@@ -122,7 +123,7 @@ namespace MyCodeCamp.Controllers
             }
             catch(Exception ex)
             {
-
+                logger.LogError($"Threw exception while deleting Camp: {ex}");
             }
 
             return BadRequest("Could not delete camp.");
