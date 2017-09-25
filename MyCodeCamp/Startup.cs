@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MyCodeCamp
 {
@@ -46,7 +47,14 @@ namespace MyCodeCamp
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddAutoMapper();
 
-            services.AddMvc()
+            services.AddMvc(opt =>
+            {
+                if(!env.IsProduction())
+                {
+                    opt.SslPort = 44355;
+                }
+                opt.Filters.Add(new RequireHttpsAttribute());
+            })
                 .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.ReferenceLoopHandling = 
