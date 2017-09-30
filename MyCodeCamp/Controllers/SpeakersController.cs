@@ -41,7 +41,7 @@ namespace MyCodeCamp.Controllers
             }
             catch (Exception ex)
             {
-                logger.LogError($"Threw exception while retriving sprakers: {ex}");
+                logger.LogError($"Exception was thrown while retriving speakers: {ex}");
             }
 
             return BadRequest($"Could not retrieve speakers for {moniker}");
@@ -62,7 +62,7 @@ namespace MyCodeCamp.Controllers
             }
             catch (Exception ex)
             {
-                logger.LogError($"Threw exception while retriving spraker: {ex}");
+                logger.LogError($"Exception was thrown while retriving spraker: {ex}");
             }
 
             return BadRequest($"Could not retrieve speaker for {moniker}");
@@ -143,7 +143,7 @@ namespace MyCodeCamp.Controllers
             }
             catch (Exception ex)
             {
-                logger.LogError($"Threw exception while deleting sprakers: {ex}");
+                logger.LogError($"Exception was thrown while deleting speakers: {ex}");
             }
 
             return BadRequest("Could not delete speaker.");

@@ -50,12 +50,12 @@ namespace MyCodeCamp.Controllers
             }
             catch (Exception ex)
             {
-                logger.LogError($"Threw exception while saving Camp: {ex}");
+                logger.LogError($"Exception was thrown while saving Camp: {ex}");
                 return BadRequest();
             }
         }
 
-        [EnableCors("LinasPolicy")]
+        //[EnableCors("LinasPolicy")]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CampModel campModel)
         {
@@ -78,7 +78,7 @@ namespace MyCodeCamp.Controllers
             }
             catch(Exception ex)
             {
-                logger.LogError($"Threw exception while saving Camp: {ex}");
+                logger.LogError($"Exception was thrown while saving Camp: {ex}");
             }
             return BadRequest();
         }
@@ -105,7 +105,7 @@ namespace MyCodeCamp.Controllers
             }
             catch(Exception ex)
             {
-                logger.LogError($"Threw exception while updating Camp: {ex}");
+                logger.LogError($"Exception was thrown while updating Camp: {ex}");
             }
 
             return BadRequest("Couldn't update Camp");
@@ -128,7 +128,7 @@ namespace MyCodeCamp.Controllers
             }
             catch(Exception ex)
             {
-                logger.LogError($"Threw exception while deleting Camp: {ex}");
+                logger.LogError($"Exception was thrown while deleting Camp: {ex}");
             }
 
             return BadRequest("Could not delete camp.");
