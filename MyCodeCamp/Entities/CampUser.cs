@@ -1,1 +1,1 @@
-﻿using Microsoft.AspNetCore.Identity;namespace MyCodeCamp.Entities{    public class CampUser : IdentityUser    {        public string FirstName { get; set; }        public string LastName { get; set; }    }}
+﻿using Microsoft.AspNetCore.Identity;namespace MyCodeCamp.Entities{    public class CampUser : IdentityUser    {        public string FirstName { get; set; }        public string LastName { get; set; }    }}

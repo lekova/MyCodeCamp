@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -69,6 +70,7 @@ namespace MyCodeCamp.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Post(string moniker, [FromBody] SpeakerModel model)
         {
             try
@@ -100,6 +102,7 @@ namespace MyCodeCamp.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> Put(string moniker, int id, [FromBody] SpeakerModel model)
         {
             try
@@ -126,6 +129,7 @@ namespace MyCodeCamp.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(string moniker, int id)
         {
             try

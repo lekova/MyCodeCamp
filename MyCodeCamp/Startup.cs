@@ -15,35 +15,51 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MyCodeCamp
 {
     public class Startup
     {
-        private IConfigurationRoot config;
+        public IConfiguration Configuration { get; }
         private IHostingEnvironment env;
 
-        public Startup(IHostingEnvironment env)//IConfiguration configuration)
+        public Startup(IHostingEnvironment env, IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-               .SetBasePath(env.ContentRootPath)
-               .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-               .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-               .AddEnvironmentVariables();
             this.env = env;
-            config = builder.Build();
+            Configuration = configuration;
         }
-
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(config);
-            services.AddDbContext<CampContext>(ServiceLifetime.Scoped)
-                .AddIdentity<CampUser, IdentityRole>();
+            services.AddSingleton(Configuration);
+            services.AddDbContext<CampContext>(ServiceLifetime.Scoped);
+                //.AddIdentity<CampUser, IdentityRole>();
+
+            services.AddIdentity<CampUser, IdentityRole>()
+                .AddEntityFrameworkStores<CampContext>();
+
+            services.AddAuthentication().AddCookie(options => {
+                options.Cookie.Expiration = TimeSpan.FromDays(14);
+                options.Cookie.SameSite = SameSiteMode.Strict;
+                options.Cookie.Name = "MyCookieName";
+                options.LoginPath = "/api/auth/login";
+                options.AccessDeniedPath = "/api/auth/forbidden";
+            });
             
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.Expiration = TimeSpan.FromDays(150);
+                options.Cookie.SameSite = SameSiteMode.Strict;
+                options.Cookie.Name = "MyCookieName";
+                options.LoginPath = "/api/auth/login";
+                options.AccessDeniedPath = "/api/auth/forbidden";
+            });
+
             services.AddScoped<ICampRepository, CampRepository>();
             services.AddTransient<CampDbInitializer>();
+            services.AddTransient<CampIdentityInitializer>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddAutoMapper();
 
@@ -53,7 +69,7 @@ namespace MyCodeCamp
                 {
                     bldr.AllowAnyHeader()
                         .AllowAnyMethod()
-                        .WithOrigins("http://linalekova.com")
+                        .WithOrigins("http://linalekova.com");
                 });
                 config.AddPolicy("AnyGet", bldr =>
                 {
@@ -79,10 +95,13 @@ namespace MyCodeCamp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app,      IHostingEnvironment env, 
-                              CampDbInitializer dbSeeder,   ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app
+                            , IHostingEnvironment env
+                            , CampDbInitializer dbSeeder
+                            , CampIdentityInitializer identitySeeder
+                            , ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(config.GetSection("Logging"));
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
             // this is a global config, if we want to config separately we need to use polices
@@ -98,8 +117,11 @@ namespace MyCodeCamp
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseAuthentication();
+
             app.UseMvc();
             dbSeeder.Seed().Wait();
+            identitySeeder.Seed().Wait();
         }
     }
 }
